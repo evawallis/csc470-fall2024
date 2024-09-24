@@ -97,7 +97,15 @@ public class PlaneScript : MonoBehaviour
         if (other.CompareTag("killer"))
         {
             Destroy(this.gameObject);
-            screenText.text = "Game Over\n\nYou collected " + score + " rocks!";
+            if (score > 1)
+            {
+                screenText.text = "Game Over\n\nYou collected " + score + " rocks!"; 
+            }
+            else
+            {
+                screenText.text = "Game Over\n\nYou collected " + score + " rock!";
+            }
+            
             scoreText.text = " ";
         }
         if (other.CompareTag("wall"))
