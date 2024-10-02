@@ -15,6 +15,9 @@ public class CellScript : MonoBehaviour
     public Color aliveColor; 
     public Color deadColor;
 
+    int neighborCount; 
+    
+
     GameManager gameManager; 
 
     // Start is called before the first frame update
@@ -23,12 +26,16 @@ public class CellScript : MonoBehaviour
         SetColor();
         GameObject gmObj = GameObject.Find("GameManagerObject"); //make local variable based on string name
         gameManager = gmObj.GetComponent<GameManager>(); //set script to the variable we made
+        // int neighborCount = gameManager.CountNeighbors(xIndex, yIndex);;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+        gameManager.HandleRules(neighborCount, xIndex, yIndex);
+        SetColor();
+
     }
 
     void SetColor() //upon start, set color based on status of cell
@@ -46,10 +53,11 @@ public class CellScript : MonoBehaviour
     void OnMouseDown()
     {
         alive = !alive;
-        SetColor();
         //count neighbors
-        int neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-        Debug.Log("(" + xIndex + "," + yIndex + "): " + neighborCount);
+        // neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+        // gameManager.HandleRules(neighborCount, xIndex, yIndex);
+        // SetColor();
+        // Debug.Log("(" + xIndex + "," + yIndex + "): " + neighborCount);
 
 
     }

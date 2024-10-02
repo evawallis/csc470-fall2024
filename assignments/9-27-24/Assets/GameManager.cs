@@ -39,22 +39,59 @@ public class GameManager : MonoBehaviour
     public int CountNeighbors(int xIndex, int yIndex)
     {
         int count = 0;
-        // need to include corners!!!!! 
         for (int x = xIndex - 1; x <= xIndex + 1; x++) //goes from 1 to left to 1 to right
         {
             for (int y = yIndex - 1; y <= yIndex + 1; y++)
             {
-                //(if x!=xIndex && y!=yIndex) && 
-                if (!(x== xIndex && y== yIndex))
+
+                try
                 {
-                    if (grid[x,y].alive)//if its not ourself and its alive
+                    if (!(x== xIndex && y== yIndex))
+                    {
+                        if (grid[x,y].alive)//if its not ourself and its alive
+                        {
+                            count++;
+                        }
+                    }
+                }
+                catch (System.IndexOutOfRangeException)
                 {
-                    count++;
+                    count += 0;
                 }
-                }
+                
                 
             }
         }
         return count;
+    }
+
+    public void HandleRules(int numAliveNeighbors, int x, int y)
+    {
+        if (grid[x,y].alive)
+        {
+            if (numAliveNeighbors < 2)
+            {
+                grid[x,y].alive = false;
+            }
+            else if (numAliveNeighbors > 3)
+            {
+                grid[x,y].alive = false;
+            }
+            else 
+            {
+                grid[x,y].alive = true;
+            }
+        }
+        else
+        {
+            if (numAliveNeighbors == 3)
+            {
+                grid[x,y].alive = true;
+            }
+            else
+            {
+                grid[x,y].alive = false;
+            }
+        }
     }
 }
