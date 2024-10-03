@@ -9,9 +9,10 @@ public class GameManager : MonoBehaviour
     // can also do array of cell objects where cell has refernece to cell script
 
     public GameObject cellPrefab;
+    public GameObject housePrefab;
 
     float spacing = 1.1f;
-    int size = 100;
+    int size = 10;
     // Start is called before the first frame update
     void Start()
     {

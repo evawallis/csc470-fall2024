@@ -71,8 +71,8 @@ MonoBehaviour:
   alive: 0
   xIndex: -1
   yIndex: -1
-  aliveColor: {r: 0.3228746, g: 0.9150943, b: 0.056114297, a: 0}
-  deadColor: {r: 0.77743214, g: 0.36311856, b: 0.9056604, a: 0}
+  aliveColor: {r: 0.3573604, g: 0.6226415, b: 0.23789605, a: 0}
+  deadColor: {r: 0.76862746, g: 0.76862746, b: 0.76862746, a: 0}
 --- !u!1 &2870304718639079284
 GameObject:
   m_ObjectHideFlags: 0

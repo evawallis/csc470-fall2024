@@ -35,7 +35,6 @@ public class CellScript : MonoBehaviour
         neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
         gameManager.HandleRules(neighborCount, xIndex, yIndex);
         SetColor();
-
     }
 
     void SetColor() //upon start, set color based on status of cell
@@ -53,6 +52,7 @@ public class CellScript : MonoBehaviour
     void OnMouseDown()
     {
         alive = !alive;
+       
         //count neighbors
         // neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
         // gameManager.HandleRules(neighborCount, xIndex, yIndex);
