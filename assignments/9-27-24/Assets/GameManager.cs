@@ -11,13 +11,13 @@ public class GameManager : MonoBehaviour
     public GameObject cellPrefab;
 
     float spacing = 1.1f;
-
+    int size = 100;
     // Start is called before the first frame update
     void Start()
     {
-        grid = new CellScript[10,10]; //instantiate grid with size 10x10
-        for (int x = 0; x < 10; x++){
-            for (int y = 0; y < 10; y++){
+        grid = new CellScript[size,size]; //instantiate grid with size 10x10
+        for (int x = 0; x < size; x++){
+            for (int y = 0; y < size; y++){
                 Vector3 pos = transform.position;
                 pos.x += x * spacing;
                 pos.z += y * spacing; //so grid can be on the ground 
