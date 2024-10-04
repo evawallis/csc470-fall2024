@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     
 
     float spacing = 1.1f;
-    int size = 20;
+    int size = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,8 +35,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // //from class
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     //evolve grid
+        //     Simulate();
+        // }
     }
+    //from class
+    
+
 
     public int CountNeighbors(int xIndex, int yIndex)
     {
@@ -67,21 +75,34 @@ public class GameManager : MonoBehaviour
         return count;
     }
 
-    public void HandleRules(int numAliveNeighbors, int x, int y)
+    public bool HandleRules(int numAliveNeighbors, int x, int y)
     {
+        bool didSomethingChange;
         if (grid[x,y].alive)
         {
             if (numAliveNeighbors < 2)
             {
                 grid[x,y].alive = false;
+                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                grid[x,y].gameObject.transform.localScale.y - .5f,
+				grid[x,y].gameObject.transform.localScale.z);
+                didSomethingChange = true;
             }
             else if (numAliveNeighbors > 3)
             {
                 grid[x,y].alive = false;
+                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                grid[x,y].gameObject.transform.localScale.y - .5f,
+				grid[x,y].gameObject.transform.localScale.z);
+                didSomethingChange = true;
             }
             else 
             {
                 grid[x,y].alive = true;
+                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                grid[x,y].gameObject.transform.localScale.y + .5f,
+				grid[x,y].gameObject.transform.localScale.z);
+                didSomethingChange = false;
             }
         }
         else
@@ -89,12 +110,21 @@ public class GameManager : MonoBehaviour
             if (numAliveNeighbors == 3)
             {
                 grid[x,y].alive = true;
+                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                grid[x,y].gameObject.transform.localScale.y + .5f,
+				grid[x,y].gameObject.transform.localScale.z);
+                didSomethingChange = true;
             }
             else
             {
                 grid[x,y].alive = false;
+                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                grid[x,y].gameObject.transform.localScale.y - .5f,
+				grid[x,y].gameObject.transform.localScale.z);
+                didSomethingChange = false;
             }
         }
+        return didSomethingChange;
     }
     // public void IsGameOver()
     // {

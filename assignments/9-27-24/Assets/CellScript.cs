@@ -28,10 +28,16 @@ public class CellScript : MonoBehaviour
     GameObject house;
     GameObject land;
 
+    float simTimer;
+    float simRate = 0.1f;
+
+    bool didSomethingChange = true;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        simTimer = simRate;
         SetColor();
         GameObject gmObj = GameObject.Find("GameManagerObject"); //make local variable based on string name
         gameManager = gmObj.GetComponent<GameManager>(); //set script to the variable we made
@@ -42,49 +48,41 @@ public class CellScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // gameManager.IsGameOver();
-        neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-        gameManager.HandleRules(neighborCount, xIndex, yIndex);
-        SetColor();
-        if(!hasLand)
+        simTimer -= Time.deltaTime;
+        if (simTimer < 0 && didSomethingChange == true)
         {
-            if(!alive && hasHouse)
+            if (Input.GetKey(KeyCode.Space))
             {
-                Destroy(house);
-                Debug.Log("destroyed house");
-                hasHouse = false;
-                land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
-                Debug.Log("made land");
-                hasLand = true;
-                alive = false;
+                simTimer = simRate;
+                neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+                didSomethingChange = gameManager.HandleRules(neighborCount, xIndex, yIndex);
+                SetColor();
             }
-        } 
+        }
+        else
+        {
+            Debug.Log("click something");
+        }
+        // gameManager.IsGameOver();
+        // neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+        // gameManager.HandleRules(neighborCount, xIndex, yIndex);
+        // SetColor();
+        // if(!hasLand)
+        // {
+        //     if(!alive && hasHouse)
+        //     {
+        //         Destroy(house);
+        //         Debug.Log("destroyed house");
+        //         hasHouse = false;
+        //         land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
+        //         Debug.Log("made land");
+        //         hasLand = true;
+        //         alive = false;
+        //     }
+        // } 
     }
 
-    IEnumerator UpdateCoroutine()
-    {
-        while (true)
-        {
-            neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-            gameManager.HandleRules(neighborCount, xIndex, yIndex);
-            SetColor();
-            if(!hasLand)
-            {
-                if(!alive && hasHouse)
-                {
-                    Destroy(house);
-                    Debug.Log("destroyed house");
-                    hasHouse = false;
-                    land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
-                    Debug.Log("made land");
-                    hasLand = true;
-                    alive = false;
-                }
-            } 
-            yield return new WaitForSeconds(1f);
-        }
-    
-    }
+   
 
     void SetColor() //upon start, set color based on status of cell
     {
@@ -105,12 +103,21 @@ public class CellScript : MonoBehaviour
             if (alive)
             {
                 alive = false;
-                HandleHouses();
+                neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+                gameManager.HandleRules(neighborCount, xIndex, yIndex);
+                SetColor();
+                didSomethingChange = true;
+
+                // HandleHouses();
             }   
             else
             {
                 alive = true;
-                HandleHouses();
+                neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+                gameManager.HandleRules(neighborCount, xIndex, yIndex);
+                SetColor();
+                didSomethingChange = false;
+                // HandleHouses();
             }
         }
         
