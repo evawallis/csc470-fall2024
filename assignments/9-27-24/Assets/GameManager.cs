@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     
 
     float spacing = 1.1f;
-    int size = 10;
+    int size = 20;
     // Start is called before the first frame update
     void Start()
     {

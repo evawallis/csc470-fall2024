@@ -35,7 +35,8 @@ public class CellScript : MonoBehaviour
         SetColor();
         GameObject gmObj = GameObject.Find("GameManagerObject"); //make local variable based on string name
         gameManager = gmObj.GetComponent<GameManager>(); //set script to the variable we made
-        // int neighborCount = gameManager.CountNeighbors(xIndex, yIndex);;
+        // int neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+        // UpdateCoroutine();
     }
 
     // Update is called once per frame
@@ -58,6 +59,31 @@ public class CellScript : MonoBehaviour
                 alive = false;
             }
         } 
+    }
+
+    IEnumerator UpdateCoroutine()
+    {
+        while (true)
+        {
+            neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+            gameManager.HandleRules(neighborCount, xIndex, yIndex);
+            SetColor();
+            if(!hasLand)
+            {
+                if(!alive && hasHouse)
+                {
+                    Destroy(house);
+                    Debug.Log("destroyed house");
+                    hasHouse = false;
+                    land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
+                    Debug.Log("made land");
+                    hasLand = true;
+                    alive = false;
+                }
+            } 
+            yield return new WaitForSeconds(1f);
+        }
+    
     }
 
     void SetColor() //upon start, set color based on status of cell
@@ -109,8 +135,6 @@ public class CellScript : MonoBehaviour
             Debug.Log("made land from click");
             hasLand = true;
             alive = false;
-            
-
         }
     }
 }
