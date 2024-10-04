@@ -16,9 +16,18 @@ public class CellScript : MonoBehaviour
     public Color deadColor;
 
     int neighborCount; 
+
+    bool hasHouse = false;
+    bool hasLand = false;
     
+    public GameObject housePrefab;
+    public GameObject soilPrefab;
 
     GameManager gameManager; 
+
+    GameObject house;
+    GameObject land;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +41,23 @@ public class CellScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // gameManager.IsGameOver();
         neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
         gameManager.HandleRules(neighborCount, xIndex, yIndex);
         SetColor();
+        if(!hasLand)
+        {
+            if(!alive && hasHouse)
+            {
+                Destroy(house);
+                Debug.Log("destroyed house");
+                hasHouse = false;
+                land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
+                Debug.Log("made land");
+                hasLand = true;
+                alive = false;
+            }
+        } 
     }
 
     void SetColor() //upon start, set color based on status of cell
@@ -51,14 +74,43 @@ public class CellScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        alive = !alive;
-       
-        //count neighbors
-        // neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-        // gameManager.HandleRules(neighborCount, xIndex, yIndex);
-        // SetColor();
-        // Debug.Log("(" + xIndex + "," + yIndex + "): " + neighborCount);
+        if(!hasLand)
+        {
+            if (alive)
+            {
+                alive = false;
+                HandleHouses();
+            }   
+            else
+            {
+                alive = true;
+                HandleHouses();
+            }
+        }
+        
+    }
+    void HandleHouses()
+    {
+        if(alive)
+        {
+            Vector3 pos = transform.position;
+            pos.y += 1f;
+            house = Instantiate(housePrefab, pos, Quaternion.identity);
+            hasHouse=true;
+            Debug.Log("made house from click");
 
+        }
+        else if (hasHouse)
+        {
+            Destroy(house);
+            Debug.Log("destroyed house from click");
+            hasHouse=false;
+            land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
+            Debug.Log("made land from click");
+            hasLand = true;
+            alive = false;
+            
 
+        }
     }
 }

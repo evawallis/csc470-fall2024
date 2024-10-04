@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     // can also do array of cell objects where cell has refernece to cell script
 
     public GameObject cellPrefab;
-    public GameObject housePrefab;
+    public GameObject landPrefab;
+    
 
     float spacing = 1.1f;
     int size = 10;
@@ -95,4 +96,29 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    // public void IsGameOver()
+    // {
+    //     bool isGameOver = false;
+    //     for (int x = 0; x < size; x++)
+    //     {
+    //         for (int y = 0; y < size; y++)
+    //         {
+    //             if (!grid[x,y].alive)
+    //             {
+    //                 isGameOver= true;
+    //             }
+    //         }
+    //     }
+    //     if (!isGameOver)
+    //     {
+    //         for (int x = 0; x <size; x++)
+    //         {
+    //             for (int y = 0; y <size; y++)
+    //             {
+    //                 Instantiate(landPrefab, grid[x,y], Quaternion.identity);
+    //             }
+    //         }
+    //     }
+    // }
+   
 }

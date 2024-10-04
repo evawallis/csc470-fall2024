@@ -73,6 +73,8 @@ MonoBehaviour:
   yIndex: -1
   aliveColor: {r: 0.3573604, g: 0.6226415, b: 0.23789605, a: 0}
   deadColor: {r: 0.76862746, g: 0.76862746, b: 0.76862746, a: 0}
+  housePrefab: {fileID: 100014, guid: dd8de5fe3f0695e458ab9ad0b0d065ca, type: 3}
+  soilPrefab: {fileID: 919132149155446097, guid: 48f04bc713af94b498ac2ca6d9d87ce7, type: 3}
 --- !u!1 &2870304718639079284
 GameObject:
   m_ObjectHideFlags: 0
