@@ -17,16 +17,8 @@ public class CellScript : MonoBehaviour
 
     int neighborCount; 
 
-    bool hasHouse = false;
-    bool hasLand = false;
-    
-    public GameObject housePrefab;
-    public GameObject soilPrefab;
-
     GameManager gameManager; 
 
-    GameObject house;
-    GameObject land;
 
     float simTimer;
     float simRate = 0.1f;
@@ -63,23 +55,6 @@ public class CellScript : MonoBehaviour
         {
             Debug.Log("click something");
         }
-        // gameManager.IsGameOver();
-        // neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-        // gameManager.HandleRules(neighborCount, xIndex, yIndex);
-        // SetColor();
-        // if(!hasLand)
-        // {
-        //     if(!alive && hasHouse)
-        //     {
-        //         Destroy(house);
-        //         Debug.Log("destroyed house");
-        //         hasHouse = false;
-        //         land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
-        //         Debug.Log("made land");
-        //         hasLand = true;
-        //         alive = false;
-        //     }
-        // } 
     }
 
    
@@ -98,50 +73,19 @@ public class CellScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(!hasLand)
+        if (alive)
         {
-            if (alive)
-            {
-                alive = false;
-                neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-                gameManager.HandleRules(neighborCount, xIndex, yIndex);
-                SetColor();
-                didSomethingChange = true;
-
-                // HandleHouses();
-            }   
-            else
-            {
-                alive = true;
-                neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-                gameManager.HandleRules(neighborCount, xIndex, yIndex);
-                SetColor();
-                didSomethingChange = false;
-                // HandleHouses();
-            }
-        }
-        
-    }
-    void HandleHouses()
-    {
-        if(alive)
-        {
-            Vector3 pos = transform.position;
-            pos.y += 1f;
-            house = Instantiate(housePrefab, pos, Quaternion.identity);
-            hasHouse=true;
-            Debug.Log("made house from click");
-
-        }
-        else if (hasHouse)
-        {
-            Destroy(house);
-            Debug.Log("destroyed house from click");
-            hasHouse=false;
-            land = Instantiate(soilPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
-            Debug.Log("made land from click");
-            hasLand = true;
             alive = false;
+            neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+            didSomethingChange = gameManager.HandleRules(neighborCount, xIndex, yIndex);
+            SetColor();
+        }   
+        else
+        {
+            alive = true;
+            neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
+            didSomethingChange = gameManager.HandleRules(neighborCount, xIndex, yIndex);
+            SetColor();
         }
     }
 }

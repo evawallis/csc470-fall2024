@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     // can also do array of cell objects where cell has refernece to cell script
 
     public GameObject cellPrefab;
-    public GameObject landPrefab;
     
 
     float spacing = 1.1f;
@@ -83,25 +82,25 @@ public class GameManager : MonoBehaviour
             if (numAliveNeighbors < 2)
             {
                 grid[x,y].alive = false;
-                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
-                grid[x,y].gameObject.transform.localScale.y - .5f,
-				grid[x,y].gameObject.transform.localScale.z);
+                // grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                // grid[x,y].gameObject.transform.localScale.y - .5f,
+				// grid[x,y].gameObject.transform.localScale.z);
                 didSomethingChange = true;
             }
             else if (numAliveNeighbors > 3)
             {
                 grid[x,y].alive = false;
-                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
-                grid[x,y].gameObject.transform.localScale.y - .5f,
-				grid[x,y].gameObject.transform.localScale.z);
+                // grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                // grid[x,y].gameObject.transform.localScale.y - .5f,
+				// grid[x,y].gameObject.transform.localScale.z);
                 didSomethingChange = true;
             }
             else 
             {
                 grid[x,y].alive = true;
-                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
-                grid[x,y].gameObject.transform.localScale.y + .5f,
-				grid[x,y].gameObject.transform.localScale.z);
+                // grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                // grid[x,y].gameObject.transform.localScale.y + .5f,
+				// grid[x,y].gameObject.transform.localScale.z);
                 didSomethingChange = false;
             }
         }
@@ -110,17 +109,17 @@ public class GameManager : MonoBehaviour
             if (numAliveNeighbors == 3)
             {
                 grid[x,y].alive = true;
-                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
-                grid[x,y].gameObject.transform.localScale.y + .5f,
-				grid[x,y].gameObject.transform.localScale.z);
+                // grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                // grid[x,y].gameObject.transform.localScale.y + .5f,
+				// grid[x,y].gameObject.transform.localScale.z);
                 didSomethingChange = true;
             }
             else
             {
                 grid[x,y].alive = false;
-                grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
-                grid[x,y].gameObject.transform.localScale.y - .5f,
-				grid[x,y].gameObject.transform.localScale.z);
+                // grid[x,y].gameObject.transform.localScale = new Vector3(grid[x,y].gameObject.transform.localScale.x, 
+                // grid[x,y].gameObject.transform.localScale.y - .5f,
+				// grid[x,y].gameObject.transform.localScale.z);
                 didSomethingChange = false;
             }
         }
