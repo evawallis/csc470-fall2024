@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviour
                 pos.z += y * spacing; //so grid can be on the ground 
                 GameObject soil = Instantiate(soilPrefab, pos, Quaternion.identity);//Quaternion.identity is no rotation
                 grid[x,y] = soil.GetComponent<SoilScript>();
-                grid[x,y].alive = (Random.value > 0.5f); //random.value returns a value between 0 and 1, so if its greater itll be true (flipping a coin)
-                if (grid[x,y].alive == true)
+                // grid[x,y].alive = (Random.value > 0.5f); //random.value returns a value between 0 and 1, so if its greater itll be true (flipping a coin)
+                if (Random.value > 0.5f)
                 {
                     grid[x,y].MakeSeedling();
                 }
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
         }
         for (int i = 0; i < 3; i++)
         {
+            Debug.Log("made wee");
             GenerateWeeds(Random.Range(0, 10), Random.Range(0, 10));
         }
     }
@@ -70,25 +71,26 @@ public class GameManager : MonoBehaviour
 
     public void GenerateWeeds(int x, int y)
     {
+        Debug.Log("generate");
         grid[x, y].MakeWeed();
+        KillNeighbors(x, y);
+        return;
     }
     
     public void KillNeighbors(int xIndex, int yIndex)
     {
+        Debug.Log("kill neighbors");
         for (int x = xIndex - 1; x <= xIndex + 1; x++)
         {
             for (int y = yIndex - 1; y <= yIndex + 1; y++)
             {
                try
                 {
-                    if (!(x== xIndex && y== yIndex))
-                    {
-                        if (grid[x,y].alive)//if its not ourself and its alive
-                        {
-                            grid[x,y].Kill();
-                            Debug.Log("killed" + x + " " + y);
-                        }
-                    }
+                    // if (!(x== xIndex && y== yIndex))
+                    // {
+                        grid[x,y].Kill();
+                        Debug.Log("killed" + x + " " + y);
+                    
                 }
                 catch (System.IndexOutOfRangeException)
                 {
@@ -96,5 +98,26 @@ public class GameManager : MonoBehaviour
                 } 
             }
         }
+        return;
+    }
+
+    public void ReviveNeighbors(int xIndex, int yIndex)
+    {
+        for (int x = xIndex - 1; x <= xIndex + 1; x++)
+        {
+            for (int y = yIndex - 1; y <= yIndex + 1; y++)
+            {
+               try
+                {
+                    grid[x,y].alive = true;;
+                    Debug.Log("revived" + x + " " + y);
+                }
+                catch (System.IndexOutOfRangeException)
+                {
+                    continue;
+                } 
+            }
+        }
+        return;
     }
 }

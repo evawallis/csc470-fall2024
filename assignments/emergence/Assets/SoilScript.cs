@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoilScript : MonoBehaviour
 {
 
-    public bool alive = false;
+    public bool alive = true;
 
     public int xIndex = -1;
     public int yIndex = -1;
@@ -48,13 +48,14 @@ public class SoilScript : MonoBehaviour
             {
                 MakeFlower();
             }
-
+            // gameManager.GenerateWeeds(Random.Range(0, 10), Random.Range(0,10));
         }
     }
 
     public void MakeSeedling()
     {
-        if (!(hasSprout && hasFlower && hasWeed && alive))
+        Debug.Log("made seed");
+        if (!(hasSprout && hasFlower && hasWeed))
         {
             seedling = Instantiate(seedling, transform.position, Quaternion.identity);
             hasSeedling = true;
@@ -84,6 +85,7 @@ public class SoilScript : MonoBehaviour
             Destroy(sprout);
             hasSprout = false;
         }
+        // return;
     }
 
     public void MakeWeed()
@@ -103,12 +105,13 @@ public class SoilScript : MonoBehaviour
                 Destroy(sprout);
                 hasSprout = false;
             }
-            gameManager.KillNeighbors(xIndex, yIndex);
         }
+        return;
     }
 
     public void Kill()
     {
+        alive = false;
         if (hasSeedling)
         {
             Destroy(seedling);
@@ -133,11 +136,13 @@ public class SoilScript : MonoBehaviour
                 if (hasWeed)
                 {
                     hasWeed = false;
-                    alive = false;
+                    alive = true;
                     Destroy(weed);
+                    gameManager.ReviveNeighbors(xIndex, yIndex);
                 }
-                else
+                else if (alive)
                 {
+                    Debug.Log("attempted to make seed");
                     MakeSeedling();
                 }
             }
