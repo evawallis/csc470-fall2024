@@ -15,10 +15,15 @@ public class SoilScript : MonoBehaviour
     public GameObject flower;
     public GameObject weed;
 
-    bool hasSeedling = false;
-    bool hasSprout = false;
-    bool hasFlower = false;
-    bool hasWeed = false;
+    GameObject seedlingObj;
+    GameObject sproutObj;
+    GameObject flowerObj;
+    GameObject weedObj;
+
+    public bool hasSeedling = false;
+    public bool hasSprout = false;
+    public bool hasFlower = false;
+    public bool hasWeed = false;
 
     int neighborCount;
 
@@ -36,20 +41,6 @@ public class SoilScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
-        {
-            updated = true;
-            neighborCount = gameManager.CountNeighbors(xIndex, yIndex);
-            if (hasSeedling && neighborCount >= 3)
-            {
-                MakeSprout();
-            }
-            else if (hasSprout && neighborCount >=6)
-            {
-                MakeFlower();
-            }
-            // gameManager.GenerateWeeds(Random.Range(0, 10), Random.Range(0,10));
-        }
     }
 
     public void MakeSeedling()
@@ -57,7 +48,7 @@ public class SoilScript : MonoBehaviour
         Debug.Log("made seed");
         if (!(hasSprout && hasFlower && hasWeed))
         {
-            seedling = Instantiate(seedling, transform.position, Quaternion.identity);
+            seedlingObj = Instantiate(seedling, transform.position, Quaternion.identity);
             hasSeedling = true;
             alive = true;
         }
@@ -67,10 +58,10 @@ public class SoilScript : MonoBehaviour
     {
         if (hasSeedling && !(hasFlower && hasWeed && alive))
         {
-            sprout = Instantiate(sprout, transform.position, Quaternion.identity);
+            sproutObj = Instantiate(sprout, transform.position, Quaternion.identity);
             hasSprout = true;
             alive = true;
-            Destroy(seedling);
+            Destroy(seedlingObj);
             hasSeedling = false;
         }
     }
@@ -79,10 +70,10 @@ public class SoilScript : MonoBehaviour
     {
         if (hasSprout && !(hasSeedling && hasWeed && alive))
         {
-            flower = Instantiate(flower, transform.position, Quaternion.identity);
+            flowerObj = Instantiate(flower, transform.position, Quaternion.identity);
             hasFlower = true;
             alive = true;
-            Destroy(sprout);
+            Destroy(sproutObj);
             hasSprout = false;
         }
         // return;
@@ -92,17 +83,17 @@ public class SoilScript : MonoBehaviour
     {
         if (!(hasFlower))
         {
-            weed = Instantiate(weed, transform.position, Quaternion.identity);
+            weedObj = Instantiate(weed, transform.position, Quaternion.identity);
             hasWeed = true;
             alive = false;
             if (hasSeedling)
             {
-                Destroy(seedling);
+                Destroy(seedlingObj);
                 hasSeedling = false;
             }
             else if (hasSprout)
             {
-                Destroy(sprout);
+                Destroy(sproutObj);
                 hasSprout = false;
             }
         }
@@ -114,13 +105,13 @@ public class SoilScript : MonoBehaviour
         alive = false;
         if (hasSeedling)
         {
-            Destroy(seedling);
+            Destroy(seedlingObj);
             hasSeedling = false;
             alive = false;
         }
         else if (hasSprout)
         {
-            Destroy(sprout);
+            Destroy(sproutObj);
             hasSprout = false;
             alive = false;
         }
@@ -128,29 +119,25 @@ public class SoilScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (updated)
+        
+        if (!(hasSeedling && hasSprout && hasFlower && gameManager.needToUpdate))
         {
-            updated = false;
-            if (!(hasSeedling && hasSprout && hasFlower))
+            gameManager.needToUpdate = true;
+            if (hasWeed)
             {
-                if (hasWeed)
-                {
-                    hasWeed = false;
-                    alive = true;
-                    Destroy(weed);
-                    gameManager.ReviveNeighbors(xIndex, yIndex);
-                }
-                else if (alive)
-                {
-                    Debug.Log("attempted to make seed");
-                    MakeSeedling();
-                }
+                hasWeed = false;
+                alive = true;
+                Destroy(weedObj);
+                Debug.Log("destroyed weed");
+                gameManager.ReviveNeighbors();
+            }
+            else if (alive)
+            {
+                Debug.Log("attempted to make seed");
+                MakeSeedling();
             }
         }
-        else
-        {
-            Debug.Log("update");
-        }
+        
     }
 
     
