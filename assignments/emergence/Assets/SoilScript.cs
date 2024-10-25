@@ -119,24 +119,61 @@ public class SoilScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        
-        if (!(hasSeedling && hasSprout && hasFlower && gameManager.needToUpdate))
+        if (!(hasSeedling && hasSprout && hasFlower && gameManager.needToUpdate)) //if its clickable
         {
             gameManager.needToUpdate = true;
-            if (hasWeed)
+            if (!gameManager.plantOrPick)//if picking
             {
-                hasWeed = false;
-                alive = true;
-                Destroy(weedObj);
-                Debug.Log("destroyed weed");
-                gameManager.ReviveNeighbors();
+                while (gameManager.numOfClicks > 0)
+                {
+                    if (hasWeed)
+                    {
+                        Debug.Log("tried to pick weed");
+                        Destroy(weedObj);
+                        hasWeed = false;
+                        gameManager.ReviveNeighbors(); 
+                        alive = true;
+                        gameManager.numOfClicks--;
+                    }
+                }
             }
-            else if (alive)
+            else if (gameManager.plantOrPick)//if planting
             {
-                Debug.Log("attempted to make seed");
-                MakeSeedling();
+                while(gameManager.numOfClicks > 0)
+                {
+                    if (alive)
+                    {
+                        Debug.Log("tried to plant seed");
+                        MakeSeedling();
+                        gameManager.numOfClicks--;
+                    }
+                }
             }
         }
+
+
+
+
+
+
+
+        // if (!(hasSeedling && hasSprout && hasFlower && gameManager.needToUpdate))
+        // {
+        //     gameManager.needToUpdate = true;
+        //     if (hasWeed)
+        //     {
+        //         hasWeed = false;
+        //         alive = true;
+        //         Destroy(weedObj);
+        //         Debug.Log("destroyed weed");
+        //         gameManager.ReviveNeighbors();
+        //     }
+        //     else if (alive)
+        //     {
+        //         Debug.Log("attempted to make seed");
+        //         MakeSeedling();
+        //     }
+        // }
         
     }
 

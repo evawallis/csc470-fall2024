@@ -6,6 +6,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject rakeImage;
+    public GameObject seedImage;
     SoilScript[,] grid;
     public GameObject soilPrefab;
     float spacing = 1.1f;
@@ -15,9 +17,13 @@ public class GameManager : MonoBehaviour
     public bool needToUpdate = true;
     public TMP_Text screenText; 
     public GameObject backgroundImage;
+    public bool plantOrPick = false;
+    public int numOfClicks = 0;
     // Start is called before the first frame update
     void Start()
     {
+        rakeImage.SetActive(false);
+        seedImage.SetActive(false);
         screenText.text = "Welcome to the Garden!\n Press 'space' to evolve from a seedling -> sprout -> flower! Click a weed to remove it, or click a blank cell to plant a seed.\nCreate as many flowers as you can. Weeds prevent growth in surrounding cells.";
         simTimer = simRate;
         grid = new SoilScript[size,size]; //instantiate grid with size 10x10
@@ -51,6 +57,18 @@ public class GameManager : MonoBehaviour
         {
             screenText.text = "";
             Destroy(backgroundImage);
+            rakeImage.SetActive(true);
+            seedImage.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            plantOrPick = true;
+            numOfClicks = 3;
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            plantOrPick = false;
+            numOfClicks = 1;
         }
         string isGameOver = GameOver();
         if (System.String.Equals(isGameOver, "win"))

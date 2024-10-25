@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlatformerController : MonoBehaviour
 {
 
+    public Transform cameraTransform;
+
     public CharacterController cc; //reference to character controller
 
     float rotateSpeed = 50f;
@@ -28,8 +30,12 @@ public class PlatformerController : MonoBehaviour
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
 
+        Vector3 flatCameraForward = cameraTransform.forward;
+        flatCameraForward.y = 0;
+
         transform.Rotate(0, rotateSpeed * hAxis * Time.deltaTime, 0);
-        Vector3 amountToMove = transform.forward * moveSpeed * vAxis;
+        Vector3 amountToMove = flatCameraForward.normalized * moveSpeed * vAxis;
+        amountToMove += cameraTransform.right * moveSpeed * hAxis;
 
         if (!cc.isGrounded)
         {
@@ -56,6 +62,9 @@ public class PlatformerController : MonoBehaviour
         amountToMove *= Time.deltaTime;
 
         cc.Move(amountToMove);
+        amountToMove.y = 0;
+        transform.forward = amountToMove.normalized; //handle rotation
+        // transform.rotation = Quaternion.LookRotation(amountToMove);
 
         // if (Input.GetKeyDown(KeyCode.Space))
         // {
