@@ -99,6 +99,7 @@ public class PlatformerController : MonoBehaviour
             if (other.CompareTag("stump"))
             {
                 yVelocity = jumpVelocity;
+                Debug.Log("stump");
             }
         }
     }
