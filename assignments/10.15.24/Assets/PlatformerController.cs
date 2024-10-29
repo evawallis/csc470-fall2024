@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlatformerController : MonoBehaviour
 {
 
+    public GameObject cameraObject;
     public Transform cameraTransform;
 
     public CharacterController cc; //reference to character controller
@@ -18,6 +19,9 @@ public class PlatformerController : MonoBehaviour
     float yVelocity = 0f; 
     float gravity = -9.8f;
 
+    public Terrain terrain;
+    public GameObject stump;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,17 +30,18 @@ public class PlatformerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   //get axes
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
-
+        //create camera position
         Vector3 flatCameraForward = cameraTransform.forward;
         flatCameraForward.y = 0;
-
+        //player rotation
         transform.Rotate(0, rotateSpeed * hAxis * Time.deltaTime, 0);
         Vector3 amountToMove = flatCameraForward.normalized * moveSpeed * vAxis;
         amountToMove += cameraTransform.right * moveSpeed * hAxis;
 
+        //gravity
         if (!cc.isGrounded)
         {
             if (yVelocity > 0 && Input.GetKeyUp(KeyCode.Space))//release space
@@ -54,13 +59,15 @@ public class PlatformerController : MonoBehaviour
                 yVelocity = jumpVelocity;
             }
         }
-
-        
-
+        //camera looks at player position
+        // cameraTransform.position = new Vector3(transform.position.x, transform.position.y+5f, transform.position.z-5f);
+        cameraTransform.LookAt(transform.position);
+        //player movement
+        // cameraObject.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 20f);
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
 
         amountToMove *= Time.deltaTime;
-
+        //player movement
         cc.Move(amountToMove);
         amountToMove.y = 0;
         transform.forward = amountToMove.normalized; //handle rotation
@@ -70,5 +77,29 @@ public class PlatformerController : MonoBehaviour
         // {
         //     cc.Move(transform.forward);
         // }
+
+        // float xPos = transform.position.x;
+        // float yPos = transform.position.y;
+        // float zPos = transform.position.z;
+        // for (int count = 0; count < 20; count++)
+        // {
+        //     for (float i = xPos-50; i <= xPos+50; i++)
+        //     {
+        //         for (float j = zPos-50; j <= zPos+50; j++)
+        //         {
+        //             yPos = Terrain.activeTerrain.SampleHeight(transform.position);
+        //             Instantiate(stump, new Vector3(xPos, yPos, zPos), Quaternion.identity);
+
+        //         }
+        //     }
+        // }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("stump"))
+            {
+                yVelocity = jumpVelocity;
+            }
+        }
     }
 }
