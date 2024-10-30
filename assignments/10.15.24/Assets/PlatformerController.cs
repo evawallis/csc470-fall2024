@@ -63,7 +63,7 @@ public class PlatformerController : MonoBehaviour
         // cameraTransform.position = new Vector3(transform.position.x, transform.position.y+5f, transform.position.z-5f);
         cameraTransform.LookAt(transform.position);
         //player movement
-        // cameraObject.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 20f);
+        cameraObject.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 20f);
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
 
         amountToMove *= Time.deltaTime;
@@ -94,13 +94,16 @@ public class PlatformerController : MonoBehaviour
         //     }
         // }
 
-        void OnTriggerEnter(Collider other)
+        
+    }
+    void OnTriggerEnter(Collider other)
         {
+            Debug.Log("triggered");
+
             if (other.CompareTag("stump"))
             {
                 yVelocity = jumpVelocity;
                 Debug.Log("stump");
             }
         }
-    }
 }
