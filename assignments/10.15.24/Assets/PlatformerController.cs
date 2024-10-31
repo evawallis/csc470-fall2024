@@ -21,6 +21,18 @@ public class PlatformerController : MonoBehaviour
 
     public Terrain terrain;
     public GameObject stump;
+    public GameObject movingPlatform;
+    public Vector3 previousMovingPlatformPosition;
+    Vector3 amountPlatformMoved;
+    boolean onPlatform = false;
+
+    float sampleTime;
+    bool dash = false;
+
+    float dashAmount = 8;
+    float dashVelocity = 0;
+    float friction = -2.8f;
+    // float friction = -10f;
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +80,41 @@ public class PlatformerController : MonoBehaviour
         cameraTransform.LookAt(transform.position);
         //player movement
         cameraObject.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 20f);
+
+
+        // if (movingPlatform != null)
+        // {
+        //     Vector3 amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
+        //     amountToMove += amountPlatformMoved;
+        //     previousMovingPlatformPosition = movingPlatform.transform.position;
+        // }
+
+        // if (dash)
+        // {
+        //     if (Time.time >= sampleTime + 3)
+        //     {
+        //         amountToMove -= transform.forward * dashVelocity;
+        //         bool dash=false;
+        //     }
+        //     else
+        //     {
+        //         amountToMove += transform.forward * dashVelocity;
+        //     }
+        // }
+
+        // Update movement based on platform if player is on the platform
+        if (onPlatform && movingPlatform != null)
+        {
+            amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
+            amountToMove += amountPlatformMoved;
+            previousMovingPlatformPosition = movingPlatform.transform.position;
+        }
+        // else
+        // {
+        //     amountPlatformMoved = Vector3.zero; // Reset movement if player is off the platform
+        // }
+        
+        // amountToMove += amountPlatformMoved;
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
 
         amountToMove *= Time.deltaTime;
@@ -109,5 +156,48 @@ public class PlatformerController : MonoBehaviour
                 yVelocity = 25f;
                 Debug.Log("stump");
             }
+            // else if (other.CompareTag("mushroom"))
+            // {
+            //     // Dash();
+            //     bool dash=true;
+            //     sampleTime = Time.time;
+            //     Debug.Log("mushroom");
+            //     dashVelocity = dashAmount;
+            //     dashVelocity += friction * Time.deltaTime;
+            //     dashVelocity = Mathf.Clamp(dashVelocity, 0, 10000);
+
+            // }
+            else if (other.CompareTag("platform"))
+            {
+                Debug.Log("platform");
+                // transform.position = other.transform.position;
+                onPlatform = true;
+                // amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
+                previousMovingPlatformPosition = movingPlatform.transform.position;
+                
+            }
         }
+    void Dash()
+    {
+        // float normalMove = moveSpeed;
+        // float dashMove = moveSpeed * 2;
+        // float startTime = Time.time;
+        // moveSpeed = dashMove;
+        // if (Time.time >= startTime + 3)
+        // {
+        //     moveSpeed = normalMove;
+
+        // }
+         
+        // Slow the dash down, and keep it from going below zero (using clamp)
+        
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("platform"))
+        {
+            onPlatform = false;
+        }
+    }
 }
