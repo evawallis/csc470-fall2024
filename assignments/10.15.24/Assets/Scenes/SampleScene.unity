@@ -4530,6 +4530,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 818756863804748509, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7190661105189553241, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
       propertyPath: m_Name
       value: stump_tree_stump (6)
@@ -4612,8 +4616,8 @@ MonoBehaviour:
   cameraObject: {fileID: 963194225}
   cameraTransform: {fileID: 963194228}
   cc: {fileID: 928025892}
-  terrain: {fileID: 0}
-  stump: {fileID: 0}
+  terrain: {fileID: 918454468}
+  stump: {fileID: 7190661105189553241, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
 --- !u!143 &928025892
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5451,6 +5455,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5790439321093464408, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5790439321093464408, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7190661105189553241, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
       propertyPath: m_Name
       value: stump_tree_stump (1)
@@ -5495,7 +5507,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 818756863804748509, guid: 0d851feb8e1d24b6a801cb09c5e04e99, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
