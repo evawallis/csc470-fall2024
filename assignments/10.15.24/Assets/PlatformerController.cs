@@ -48,6 +48,10 @@ public class PlatformerController : MonoBehaviour
             {
                 yVelocity = 0;
             }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                yVelocity = jumpVelocity;
+            }
 
             yVelocity += gravity * Time.deltaTime;
         }
