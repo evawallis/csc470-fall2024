@@ -24,7 +24,7 @@ public class PlatformerController : MonoBehaviour
     public GameObject movingPlatform;
     public Vector3 previousMovingPlatformPosition;
     Vector3 amountPlatformMoved;
-    boolean onPlatform = false;
+    bool onPlatform = false;
 
     float sampleTime;
     bool dash = false;
@@ -43,6 +43,7 @@ public class PlatformerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   //get axes
+
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
         //create camera position
@@ -105,14 +106,17 @@ public class PlatformerController : MonoBehaviour
         // Update movement based on platform if player is on the platform
         if (onPlatform && movingPlatform != null)
         {
+            Debug.Log("moving");
             amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
             amountToMove += amountPlatformMoved;
+            Debug.Log("moved");
             previousMovingPlatformPosition = movingPlatform.transform.position;
         }
-        // else
-        // {
-        //     amountPlatformMoved = Vector3.zero; // Reset movement if player is off the platform
-        // }
+        else
+        {
+            amountPlatformMoved = Vector3.zero; // Reset movement if player is off the platform
+            previousMovingPlatformPosition = movingPlatform.transform.position;
+        }
         
         // amountToMove += amountPlatformMoved;
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
@@ -171,6 +175,7 @@ public class PlatformerController : MonoBehaviour
             {
                 Debug.Log("platform");
                 // transform.position = other.transform.position;
+                yVelocity = 0;
                 onPlatform = true;
                 // amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
                 previousMovingPlatformPosition = movingPlatform.transform.position;
