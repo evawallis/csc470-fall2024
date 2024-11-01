@@ -58,7 +58,7 @@ public class PlatformerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             main.text = "";
-            timeLeft = 120;
+            timeLeft = 10;
             didGameStart = true;
         }
       if (didGameStart)
@@ -86,6 +86,7 @@ public class PlatformerController : MonoBehaviour
         // {
         //     seconds.ToString();
         // }
+        seconds.ToString("D2");
         timer.text = minutes + ":" + seconds;
 
 
