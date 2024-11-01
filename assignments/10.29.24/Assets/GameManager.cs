@@ -7,6 +7,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
+    public static GameManager instance;
+
+    public List<UnitScript> units = new List<UnitScript>();
+
+    public UnitScript selectedUnit;
+
     public GameObject popUpWindow;
 
     public TMP_Text nameText;
@@ -18,6 +24,19 @@ public class GameManager : MonoBehaviour
     public Image portraitImage;
 
     // Start is called before the first frame update
+    
+    void OnEnable() //happens before start
+    {
+        if (GameManager.instance == null)
+        {
+            GameManager.instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+    
     void Start()
     {
         nameText.text = "Snoopy";
@@ -29,6 +48,30 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SelectUnit(UnitScript unit)
+    {
+        //deselect all other units
+        foreach(UnitScript u in units)
+        {
+            u.selected = false;
+            u.bodyRenderer.material.color = u.normalColor;
+
+        }
+        //select new unit
+        unit.selected = true;
+        unit.bodyRenderer.material.color = unit.selectedColor;
+        Debug.Log(unit.name);
+        selectedUnit = unit;
+    }
+
+    public void OpenCharacterSheet(UnitScript unit)
+    {
+        nameText.text = unit.name;
+        bioText.text = unit.bio;
+        statText.text = unit.stats;
+        popUpWindow.SetActive(true);
     }
 
     public void ClosePopUpWindow()

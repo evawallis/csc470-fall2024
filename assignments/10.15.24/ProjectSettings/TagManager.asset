@@ -8,6 +8,7 @@ TagManager:
   - mushroom
   - platform
   - apple
+  - horse
   layers:
   - Default
   - TransparentFX
