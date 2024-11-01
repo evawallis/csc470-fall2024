@@ -40,22 +40,29 @@ public class PlatformerController : MonoBehaviour
     public TMP_Text score;
     public TMP_Text main;
 
-    float timeLeft = 120;
+    float timeLeft = 1000;
+
+    bool didGameStart = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        main.text = "Collect all the apples\nand feed the horse \nbefore the timer runs out";
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            main.text = "";
-        }
+        main.text = "Collect all the apples\nand feed the horse \nbefore the timer runs out.\nPress Enter to start";
         
     }
 
     // Update is called once per frame
     void Update()
     {  
+        
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            main.text = "";
+            timeLeft = 120;
+            didGameStart = true;
+        }
+      if (didGameStart)
+      {  
         score.text = "Score: " + appleCount;
         if (timeLeft > 0)
         {
@@ -71,6 +78,9 @@ public class PlatformerController : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeLeft % 60);
         
         timer.text = minutes + ":" + seconds;
+
+
+        }
         dashVelocity += friction * Time.deltaTime;
         dashVelocity = Mathf.Clamp(dashVelocity, 0, 10000);
          //get axes
