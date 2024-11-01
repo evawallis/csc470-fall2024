@@ -66,11 +66,11 @@ public class GameManager : MonoBehaviour
         selectedUnit = unit;
     }
 
-    public void OpenCharacterSheet(UnitScript unit)
+    public void OpenCharacterSheet()
     {
-        nameText.text = unit.name;
-        bioText.text = unit.bio;
-        statText.text = unit.stats;
+        nameText.text = selectedUnit.name;
+        bioText.text = selectedUnit.bio;
+        statText.text = selectedUnit.stats;
         popUpWindow.SetActive(true);
     }
 
