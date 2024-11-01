@@ -222,6 +222,14 @@ public class PlatformerController : MonoBehaviour
                 Debug.Log("apple count: " + appleCount);
                 Destroy(other.gameObject);
             }
+            else if (other.CompareTag("horse"))
+            {
+                Debug.Log("horse");
+                if (appleCount >= 6)
+                {
+                    main.text = "You win!";
+                }
+            }
         }
     void Dash()
     {
