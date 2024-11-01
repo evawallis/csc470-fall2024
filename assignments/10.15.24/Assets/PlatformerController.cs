@@ -23,8 +23,8 @@ public class PlatformerController : MonoBehaviour
     public GameObject stump;
     public GameObject movingPlatform;
     public Vector3 previousMovingPlatformPosition;
-    Vector3 amountPlatformMoved;
-    bool onPlatform = false;
+    // Vector3 amountPlatformMoved;
+    // bool onPlatform = false;
 
     float sampleTime;
     bool dash = false;
@@ -43,6 +43,10 @@ public class PlatformerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   //get axes
+        // Debug.Log("player position:");
+        // Debug.Log(transform.position);
+        // Debug.Log("platform position:");
+        // Debug.Log(movingPlatform.transform.position);
 
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
@@ -83,45 +87,33 @@ public class PlatformerController : MonoBehaviour
         cameraObject.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 20f);
 
 
-        // if (movingPlatform != null)
-        // {
-        //     Vector3 amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
-        //     amountToMove += amountPlatformMoved;
-        //     previousMovingPlatformPosition = movingPlatform.transform.position;
-        // }
+    
 
-        // if (dash)
-        // {
-        //     if (Time.time >= sampleTime + 3)
-        //     {
-        //         amountToMove -= transform.forward * dashVelocity;
-        //         bool dash=false;
-        //     }
-        //     else
-        //     {
-        //         amountToMove += transform.forward * dashVelocity;
-        //     }
-        // }
+
+        amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
+
+        amountToMove *= Time.deltaTime;
 
         // Update movement based on platform if player is on the platform
-        if (onPlatform && movingPlatform != null)
+        if (movingPlatform != null)
         {
-            Debug.Log("moving");
-            amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
+            // Debug.Log("player position:");
+            // Debug.Log(transform.position);
+            // Debug.Log("platform position:");
+            // Debug.Log(movingPlatform.transform.position);
+            // Debug.Log("moving");
+            Vector3 amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
             amountToMove += amountPlatformMoved;
             Debug.Log("moved");
             previousMovingPlatformPosition = movingPlatform.transform.position;
         }
-        else
-        {
-            amountPlatformMoved = Vector3.zero; // Reset movement if player is off the platform
-            previousMovingPlatformPosition = movingPlatform.transform.position;
-        }
+        // else
+        // {
+        //     amountPlatformMoved = Vector3.zero; // Reset movement if player is off the platform
+        //     previousMovingPlatformPosition = movingPlatform.transform.position;
+        // }
         
-        // amountToMove += amountPlatformMoved;
-        amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
-
-        amountToMove *= Time.deltaTime;
+        
         //player movement
         cc.Move(amountToMove);
         amountToMove.y = 0;
@@ -175,9 +167,11 @@ public class PlatformerController : MonoBehaviour
             {
                 Debug.Log("platform");
                 // transform.position = other.transform.position;
-                yVelocity = 0;
-                onPlatform = true;
+                // yVelocity = 0;
+                // onPlatform = true;
                 // amountPlatformMoved = movingPlatform.transform.position - previousMovingPlatformPosition;
+                // previousMovingPlatformPosition = movingPlatform.transform.position;
+                movingPlatform = other.gameObject;
                 previousMovingPlatformPosition = movingPlatform.transform.position;
                 
             }
@@ -202,7 +196,7 @@ public class PlatformerController : MonoBehaviour
     {
         if (other.CompareTag("platform"))
         {
-            onPlatform = false;
+            movingPlatform = null;
         }
     }
 }
