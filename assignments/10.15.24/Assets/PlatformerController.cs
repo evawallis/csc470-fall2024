@@ -77,6 +77,15 @@ public class PlatformerController : MonoBehaviour
 
         float seconds = Mathf.FloorToInt(timeLeft % 60);
         
+        // if (seconds < 10)
+        // {
+        //     String secondText;
+        //     secondText = "0" + seconds;
+        // }
+        // else 
+        // {
+        //     seconds.ToString();
+        // }
         timer.text = minutes + ":" + seconds;
 
 
