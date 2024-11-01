@@ -42,7 +42,11 @@ public class PlatformerController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   //get axes
+    {  
+        
+        dashVelocity += friction * Time.deltaTime;
+        dashVelocity = Mathf.Clamp(dashVelocity, 0, 10000);
+         //get axes
         // Debug.Log("player position:");
         // Debug.Log(transform.position);
         // Debug.Log("platform position:");
@@ -89,7 +93,7 @@ public class PlatformerController : MonoBehaviour
 
     
 
-
+        amountToMove += transform.forward * dashVelocity;
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
 
         amountToMove *= Time.deltaTime;
@@ -152,17 +156,17 @@ public class PlatformerController : MonoBehaviour
                 yVelocity = 25f;
                 Debug.Log("stump");
             }
-            // else if (other.CompareTag("mushroom"))
-            // {
-            //     // Dash();
-            //     bool dash=true;
-            //     sampleTime = Time.time;
-            //     Debug.Log("mushroom");
-            //     dashVelocity = dashAmount;
-            //     dashVelocity += friction * Time.deltaTime;
-            //     dashVelocity = Mathf.Clamp(dashVelocity, 0, 10000);
+            else if (other.CompareTag("mushroom"))
+            {
+                // Dash();
+                // bool dash=true;
+                // sampleTime = Time.time;
+                Debug.Log("mushroom");
+                dashVelocity = dashAmount;
+                // dashVelocity += friction * Time.deltaTime;
+                // dashVelocity = Mathf.Clamp(dashVelocity, 0, 10000);
 
-            // }
+            }
             else if (other.CompareTag("platform"))
             {
                 Debug.Log("platform");
