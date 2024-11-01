@@ -29,10 +29,11 @@ public class PlatformerController : MonoBehaviour
     float sampleTime;
     bool dash = false;
 
-    float dashAmount = 8;
+    float dashAmount = 16;
     float dashVelocity = 0;
     float friction = -2.8f;
-    // float friction = -10f;
+
+    int appleCount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -177,7 +178,13 @@ public class PlatformerController : MonoBehaviour
                 // previousMovingPlatformPosition = movingPlatform.transform.position;
                 movingPlatform = other.gameObject;
                 previousMovingPlatformPosition = movingPlatform.transform.position;
-                
+            }
+            else if (other.CompareTag("apple"))
+            {
+                Debug.Log("collected");
+                appleCount += 1;
+                Debug.Log("apple count: " + appleCount);
+                Destroy(other.gameObject);
             }
         }
     void Dash()
