@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlatformerController : MonoBehaviour
 {
@@ -35,16 +36,41 @@ public class PlatformerController : MonoBehaviour
 
     int appleCount = 0;
 
+    public TMP_Text timer;
+    public TMP_Text score;
+    public TMP_Text main;
+
+    float timeLeft = 120;
+
     // Start is called before the first frame update
     void Start()
     {
+        main.text = "Collect all the apples\nand feed the horse \nbefore the timer runs out";
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            main.text = "";
+        }
         
     }
 
     // Update is called once per frame
     void Update()
     {  
+        score.text = "Score: " + appleCount;
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+        }
+        else
+        {
+            main.text = "Game Over!";
+        }
+
+        float minutes = Mathf.FloorToInt(timeLeft / 60);
+
+        float seconds = Mathf.FloorToInt(timeLeft % 60);
         
+        timer.text = minutes + ":" + seconds;
         dashVelocity += friction * Time.deltaTime;
         dashVelocity = Mathf.Clamp(dashVelocity, 0, 10000);
          //get axes
