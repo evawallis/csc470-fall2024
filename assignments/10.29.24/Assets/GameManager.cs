@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public UnitScript selectedUnit;
 
+    
+
     public GameObject popUpWindow;
 
     public TMP_Text nameText;
@@ -63,7 +65,8 @@ public class GameManager : MonoBehaviour
                 if (selectedUnit != null)
                 {
                     // selectedUnit.gameObject.transform.position =hitInfo.point;
-                    selectedUnit.destination = hitInfo.point;
+                    // selectedUnit.destination = hitInfo.point;
+                    selectedUnit.nma.SetDestination(hitInfo.point);
                 }
             }
         }

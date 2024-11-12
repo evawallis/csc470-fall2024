@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class UnitScript : MonoBehaviour
 {
     public string name;
+    public NavMeshAgent nma;
     public string bio;
     public string stats;
     // public GameObject gameManagerObject;
@@ -44,12 +46,12 @@ public class UnitScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(destination != null)
-        {
-            Vector3 direction = destination - transform.position;
-            direction.Normalize();
-            transform.position += direction * 5 * Time.deltaTime;
-        }
+        // if(destination != null)
+        // {
+        //     Vector3 direction = destination - transform.position;
+        //     direction.Normalize();
+        //     transform.position += direction * 5 * Time.deltaTime;
+        // }
         Vector3 rayStart = transform.position + Vector3.up * 1.75f;
         RaycastHit hit;
         if (Physics.Raycast(rayStart, transform.forward, out hit, Mathf.Infinity, layerMask))
