@@ -13,10 +13,24 @@ public class UnitScript : MonoBehaviour
     public Color normalColor;
     public Renderer bodyRenderer;
 
+    // public Vector3 destination;
+    public GameObject wallSeeingSphere;
+    float rotateSpeed;
+
+    LayerMask layerMask;
+
+    public Vector3 destination;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        layerMask = LayerMask.GetMask("wall");
+
         GameManager.instance.units.Add(this);
+
+        rotateSpeed = Random.Range(20, 60);
+
         transform.Rotate(0, Random.Range(0, 360), 0);
     }
 
@@ -30,7 +44,23 @@ public class UnitScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(destination != null)
+        {
+            Vector3 direction = destination - transform.position;
+            direction.Normalize();
+            transform.position += direction * 5 * Time.deltaTime;
+        }
+        Vector3 rayStart = transform.position + Vector3.up * 1.75f;
+        RaycastHit hit;
+        if (Physics.Raycast(rayStart, transform.forward, out hit, Mathf.Infinity, layerMask))
+        {
+            wallSeeingSphere.SetActive(true);
+            wallSeeingSphere.transform.position = hit.point;
+        }
+        else 
+        {
+            wallSeeingSphere.SetActive(false);
+        }
     }
 
     void OnMouseDown()

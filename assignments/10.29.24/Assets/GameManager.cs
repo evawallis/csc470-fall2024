@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
 
+    LayerMask layerMask;
+    public Vector3 destination;
+
     public List<UnitScript> units = new List<UnitScript>();
 
     public UnitScript selectedUnit;
@@ -22,6 +25,9 @@ public class GameManager : MonoBehaviour
     public TMP_Text statText;
 
     public Image portraitImage;
+
+    public Camera mainCamera;
+
 
     // Start is called before the first frame update
     
@@ -42,12 +48,25 @@ public class GameManager : MonoBehaviour
         nameText.text = "Snoopy";
         bioText.text = "hello i snoopy";
         statText.text = "wins: 1 million";
+        layerMask = LayerMask.GetMask("ground");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray mousePositionRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(mousePositionRay,out hitInfo, Mathf.Infinity, layerMask))
+            {
+                if (selectedUnit != null)
+                {
+                    // selectedUnit.gameObject.transform.position =hitInfo.point;
+                    selectedUnit.destination = hitInfo.point;
+                }
+            }
+        }
     }
 
     public void SelectUnit(UnitScript unit)
