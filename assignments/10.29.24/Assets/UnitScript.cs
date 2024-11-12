@@ -52,17 +52,17 @@ public class UnitScript : MonoBehaviour
         //     direction.Normalize();
         //     transform.position += direction * 5 * Time.deltaTime;
         // }
-        Vector3 rayStart = transform.position + Vector3.up * 1.75f;
-        RaycastHit hit;
-        if (Physics.Raycast(rayStart, transform.forward, out hit, Mathf.Infinity, layerMask))
-        {
-            wallSeeingSphere.SetActive(true);
-            wallSeeingSphere.transform.position = hit.point;
-        }
-        else 
-        {
-            wallSeeingSphere.SetActive(false);
-        }
+        // Vector3 rayStart = transform.position + Vector3.up * 1.75f;
+        // RaycastHit hit;
+        // if (Physics.Raycast(rayStart, transform.forward, out hit, Mathf.Infinity, layerMask))
+        // {
+        //     wallSeeingSphere.SetActive(true);
+        //     wallSeeingSphere.transform.position = hit.point;
+        // }
+        // else 
+        // {
+        //     wallSeeingSphere.SetActive(false);
+        // }
     }
 
     void OnMouseDown()
