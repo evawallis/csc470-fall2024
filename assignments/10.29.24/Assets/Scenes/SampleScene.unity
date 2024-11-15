@@ -1303,8 +1303,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.13973168, y: 0.30278808, z: -0.044928983, w: -0.9416878}
-  m_LocalPosition: {x: 8.141215, y: 5.238791, z: -11.350979}
+  m_LocalRotation: {x: -0.057631098, y: 0.9229505, z: -0.15255542, w: -0.3486659}
+  m_LocalPosition: {x: 17.299168, y: 10.386257, z: 18.277157}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1854,7 +1854,7 @@ GameObject:
   - component: {fileID: 1526691852}
   - component: {fileID: 1526691851}
   - component: {fileID: 1526691855}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: ground
   m_Icon: {fileID: 0}
@@ -2126,7 +2126,7 @@ GameObject:
   - component: {fileID: 1609947330}
   - component: {fileID: 1609947329}
   - component: {fileID: 1609947328}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
