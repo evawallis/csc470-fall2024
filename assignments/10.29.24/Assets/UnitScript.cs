@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class UnitScript : MonoBehaviour
 {
+    
+   
     public string name;
     public NavMeshAgent nma;
     public string bio;
@@ -23,7 +25,38 @@ public class UnitScript : MonoBehaviour
 
     public Vector3 destination;
 
+    void OnEnable()
+    {
+        GameManager.instance.SpaceBarPressed += ChangeToRandomColor;
+        GameManager.instance.UnitClicked += GameManagerSaysUnitWasClicked;
 
+    }
+
+    void OnDisable()
+    {
+        GameManager.instance.SpaceBarPressed -= ChangeToRandomColor;
+        GameManager.instance.UnitClicked -= GameManagerSaysUnitWasClicked;
+
+    }
+
+    void GameManagerSaysUnitWasClicked(UnitScript unit)
+    {
+        if (unit == this)
+        {
+            selected = true;
+            bodyRenderer.material.color = selectedColor;
+        }
+        else
+        {
+            selected = false;
+            bodyRenderer.material.color = normalColor;
+        }
+    }
+
+    void ChangeToRandomColor()
+    {
+        bodyRenderer.material.color = new Color(Random.value, Random.value, Random.value);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +110,6 @@ public class UnitScript : MonoBehaviour
         // GameManager.instance.bioText.text = bio;
         // GameManager.instance.statText.text = stats;
         // GameManager.instance.OpenCharacterSheet(this);
-        GameManager.instance.SelectUnit(this);
+        // GameManager.instance.SelectUnit(this);
     }
 }
