@@ -7,6 +7,9 @@ public class SparrowScript : MonoBehaviour
 
     // public GameObject sparrow;
 
+
+    public Animator anim; 
+
     public CharacterController cc;
 
     public GameObject camera; 
@@ -49,6 +52,18 @@ public class SparrowScript : MonoBehaviour
 
         float hAxis = Input.GetAxis("Horizontal");
         float vAxis = Input.GetAxis("Vertical");
+
+
+        if (hAxis != 0 || vAxis != 0)
+        {
+            anim.SetBool("isMoving", true);
+        }
+        else
+        {
+            anim.SetBool("isMoving", false);
+        }
+
+
         //create camera position
         Vector3 flatCameraForward = cameraTransform.forward;
         flatCameraForward.y = 0;
@@ -82,7 +97,7 @@ public class SparrowScript : MonoBehaviour
 
         cameraTransform.LookAt(transform.position);
         //player movement
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 20f);
+        camera.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 10f);
 
         amountToMove += transform.forward * dashVelocity;
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
@@ -92,6 +107,7 @@ public class SparrowScript : MonoBehaviour
         cc.Move(amountToMove);
         amountToMove.y = 0;
         transform.forward = amountToMove.normalized; //handle rotation
+        
 
 
         
