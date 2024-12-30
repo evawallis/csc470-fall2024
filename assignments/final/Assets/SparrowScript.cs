@@ -31,6 +31,8 @@ public class SparrowScript : MonoBehaviour
 
     bool isPlayerGrounded = true;
 
+    Vector3 lastMovmentDirection;
+
 
     // Start is called before the first frame update
     void Start()
