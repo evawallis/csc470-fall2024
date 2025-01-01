@@ -77,6 +77,7 @@ public class SparrowScript : MonoBehaviour
 
         if (!cc.isGrounded)
         {
+            anim.SetBool("isJumping", true);
             if (yVelocity > 0 && Input.GetKeyUp(KeyCode.Space))//release space
             {
                 yVelocity = 0;
@@ -87,9 +88,11 @@ public class SparrowScript : MonoBehaviour
             }
 
             yVelocity += gravity * Time.deltaTime;
+        
         }
         else
         {
+            anim.SetBool("isJumping", false);
             yVelocity = -2;
             if (Input.GetKeyDown(KeyCode.Space))
             {
