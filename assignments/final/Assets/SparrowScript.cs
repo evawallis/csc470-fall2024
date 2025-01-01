@@ -31,7 +31,7 @@ public class SparrowScript : MonoBehaviour
 
     bool isPlayerGrounded = true;
 
-    Vector3 lastMovmentDirection;
+    Vector3 lastMovementDirection = Vector3.forward;
 
 
     // Start is called before the first frame update
@@ -64,6 +64,8 @@ public class SparrowScript : MonoBehaviour
         {
             anim.SetBool("isMoving", false);
         }
+
+        
 
 
         //create camera position
@@ -111,7 +113,27 @@ public class SparrowScript : MonoBehaviour
 
         cc.Move(amountToMove);
         amountToMove.y = 0;
-        transform.forward = amountToMove.normalized; //handle rotation
+
+
+        if (amountToMove.magnitude > 0.01f) // Use sqrMagnitude for better performance
+        {
+            lastMovementDirection = new Vector3(amountToMove.x, 0, amountToMove.z).normalized; // Store last valid direction
+            transform.forward = lastMovementDirection; // Update character's forward direction
+        }
+        // if (amountToMove.x != 0 || amountToMove.z != 0) // Movement detected
+        // {
+        //     lastMovementDirection = new Vector3(amountToMove.x, 0, amountToMove.z).normalized;
+        //     transform.forward = lastMovementDirection;
+        // }
+        // else if (lastMovementDirection != Vector3.zero)
+        // {
+        //     transform.forward = lastMovementDirection;
+        // }
+        // else
+        // {
+        //     transform.forward = amountToMove.normalized; //handle rotation
+        // }
+        
         
 
 
