@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
 
     public Image irisMask;
+    public GameObject canvas;
 
     float fadeDuration = 1.5f;
     Vector3 initialScale;
@@ -19,6 +20,7 @@ public class GameController : MonoBehaviour
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name == "GameplayScene")
         {
+            canvas.SetActive(true);
             StartCoroutine(IrisOutCoroutine());
         }
         

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SparrowScript : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class SparrowScript : MonoBehaviour
 
 
     public Animator anim; 
+
+    public GameObject canvas;
 
     public CharacterController cc;
 
@@ -39,7 +42,16 @@ public class SparrowScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        if (currentScene == "GameplayScene") // Replace "YourSceneName" with the actual name of your scene
+        {
+            canvas.SetActive(true);
+        }
+        else
+        {
+            canvas.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -140,23 +152,8 @@ public class SparrowScript : MonoBehaviour
                 numSeeds ++;
                 Destroy(other.gameObject);
             }
-            // anim.Play("Eat");
-            // anim.SetBool("isEating", true);
-            // numSeeds ++;
-            // Destroy(other.gameObject);
-            // StartCoroutine(ResetEating());
-            // anim.SetBool("isEating", false);
+       
         }
     }
 
-    void Eat(Collider other)
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("e pressed");
-            anim.Play("Eat");
-            numSeeds ++;
-            Destroy(other.gameObject);
-        }
-    }
 }
