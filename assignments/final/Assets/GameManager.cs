@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
         imageCover.SetActive(true);
         Debug.Log("Iris out completed!");
         SceneManager.LoadScene("GameplayScene");
-        SceneManager.UnloadScene("TitleScene");
+ 
 
     }
 

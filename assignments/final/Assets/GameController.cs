@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         initialScale = irisMask.rectTransform.localScale;
+        Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name == "GameplayScene")
         {
             StartCoroutine(IrisOutCoroutine());
