@@ -33,6 +33,8 @@ public class SparrowScript : MonoBehaviour
 
     Vector3 lastMovementDirection = Vector3.forward;
 
+    int numSeeds = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -120,23 +122,41 @@ public class SparrowScript : MonoBehaviour
             lastMovementDirection = new Vector3(amountToMove.x, 0, amountToMove.z).normalized; // Store last valid direction
             transform.forward = lastMovementDirection; // Update character's forward direction
         }
-        // if (amountToMove.x != 0 || amountToMove.z != 0) // Movement detected
-        // {
-        //     lastMovementDirection = new Vector3(amountToMove.x, 0, amountToMove.z).normalized;
-        //     transform.forward = lastMovementDirection;
-        // }
-        // else if (lastMovementDirection != Vector3.zero)
-        // {
-        //     transform.forward = lastMovementDirection;
-        // }
-        // else
-        // {
-        //     transform.forward = amountToMove.normalized; //handle rotation
-        // }
-        
-        
 
 
         
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("seed"))
+        {
+            Debug.Log("seed collide");
+            // Eat(other);
+            if (Input.GetKey(KeyCode.E))
+            {
+                Debug.Log("e pressed");
+                anim.Play("Eat");
+                numSeeds ++;
+                Destroy(other.gameObject);
+            }
+            // anim.Play("Eat");
+            // anim.SetBool("isEating", true);
+            // numSeeds ++;
+            // Destroy(other.gameObject);
+            // StartCoroutine(ResetEating());
+            // anim.SetBool("isEating", false);
+        }
+    }
+
+    void Eat(Collider other)
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Debug.Log("e pressed");
+            anim.Play("Eat");
+            numSeeds ++;
+            Destroy(other.gameObject);
+        }
     }
 }
