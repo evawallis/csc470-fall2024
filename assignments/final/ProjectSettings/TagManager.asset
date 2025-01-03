@@ -9,6 +9,7 @@ TagManager:
   - tree
   - mountain
   - rock
+  - seed
   layers:
   - Default
   - TransparentFX
