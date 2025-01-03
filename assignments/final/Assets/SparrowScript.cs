@@ -38,6 +38,9 @@ public class SparrowScript : MonoBehaviour
 
     int numSeeds = 0;
 
+    public GameObject questionButton;
+    public GameObject instructionsBox;
+
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +50,7 @@ public class SparrowScript : MonoBehaviour
         if (currentScene == "GameplayScene") // Replace "YourSceneName" with the actual name of your scene
         {
             canvas.SetActive(true);
+            questionButton.SetActive(true);
         }
         else
         {
@@ -155,5 +159,17 @@ public class SparrowScript : MonoBehaviour
        
         }
     }
+
+    // public void ShowInstructions()
+    // {
+    //     instructionsBox.SetActive(true); 
+    //     questionButton.SetActive(false);
+    // }
+
+    // public void CloseInstructions()
+    // {
+    //     instructionsBox.SetActive(false);
+    //     questionButton.SetActive(true);
+    // }
 
 }
