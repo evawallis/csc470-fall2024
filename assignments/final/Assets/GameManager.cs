@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject panel;
 
+
     public GameObject talkingFriends;
 
     public TMP_Text message; 
@@ -44,7 +45,6 @@ public class GameManager : MonoBehaviour
         {
             canvasWrong.SetActive(false);
         }
-        
 
     }
 

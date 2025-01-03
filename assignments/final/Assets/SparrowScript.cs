@@ -160,16 +160,17 @@ public class SparrowScript : MonoBehaviour
         }
     }
 
-    // public void ShowInstructions()
-    // {
-    //     instructionsBox.SetActive(true); 
-    //     questionButton.SetActive(false);
-    // }
+    public void ShowInstructions()
+    {
+        instructionsBox.SetActive(true); 
+        questionButton.SetActive(false);
+        Debug.Log("ShowInstructions");
+    }
 
-    // public void CloseInstructions()
-    // {
-    //     instructionsBox.SetActive(false);
-    //     questionButton.SetActive(true);
-    // }
+    public void CloseInstructions()
+    {
+        instructionsBox.SetActive(false);
+        questionButton.SetActive(true);
+    }
 
 }

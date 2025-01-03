@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+
 
 public class GameController : MonoBehaviour
 {
 
     public Image irisMask;
     public GameObject canvas;
+
+    
+
 
     float fadeDuration = 1.5f;
     Vector3 initialScale;
@@ -22,8 +27,27 @@ public class GameController : MonoBehaviour
         {
             canvas.SetActive(true);
             StartCoroutine(IrisOutCoroutine());
+            Destroy(irisMask);
         }
         
+    }
+
+    void Awake()
+    {
+        EventSystem eventSystem = FindObjectOfType<EventSystem>();
+
+        if (eventSystem == null)
+        {
+            // If no EventSystem exists, create one
+            GameObject eventSystemObj = new GameObject("EventSystem");
+            eventSystem = eventSystemObj.AddComponent<EventSystem>();
+            eventSystemObj.AddComponent<StandaloneInputModule>(); // Default input module for the EventSystem
+            Debug.Log("Event System created.");
+        }
+        else
+        {
+            Debug.Log("Event System already exists.");
+        }
     }
 
     // Update is called once per frame
