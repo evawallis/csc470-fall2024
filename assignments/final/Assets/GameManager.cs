@@ -5,6 +5,7 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -160,6 +161,8 @@ public class GameManager : MonoBehaviour
         irisMask.rectTransform.localScale = endScale; // Ensure it's fully faded
         imageCover.SetActive(true);
         Debug.Log("Iris out completed!");
+        SceneManager.LoadScene("GameplayScene");
+        SceneManager.UnloadScene("TitleScene");
 
     }
 
