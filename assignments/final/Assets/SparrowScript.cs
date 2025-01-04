@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SparrowScript : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class SparrowScript : MonoBehaviour
 
     public GameObject questionButton;
     public GameObject instructionsBox;
+
+    public TMP_Text numSeedsText;
 
 
     // Start is called before the first frame update
@@ -138,9 +141,11 @@ public class SparrowScript : MonoBehaviour
             lastMovementDirection = new Vector3(amountToMove.x, 0, amountToMove.z).normalized; // Store last valid direction
             transform.forward = lastMovementDirection; // Update character's forward direction
         }
-
-
         
+        if (Input.GetKey(KeyCode.E))
+        {
+            anim.Play("Eat");
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -154,6 +159,7 @@ public class SparrowScript : MonoBehaviour
                 Debug.Log("e pressed");
                 anim.Play("Eat");
                 numSeeds ++;
+                numSeedsText.text = numSeeds.ToString();
                 Destroy(other.gameObject);
             }
        
