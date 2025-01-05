@@ -169,9 +169,9 @@ public class SparrowScript : MonoBehaviour
         }
         if (other.CompareTag("squid"))
         {
-            if (numSeeds < 3)
+            if (numSeeds < 20)
             {
-                squidText.text = "I'll help you find the worm but it'll cost you. Bring me 25 seeds.";
+                squidText.text = "I'll help you find the worm but it'll cost you. Bring me 20 seeds.";
                 squidAnimInBox.Play("Eyes_Blink");
                 squidTextBox.SetActive(true);
             }
