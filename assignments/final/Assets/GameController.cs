@@ -58,6 +58,7 @@ public class GameController : MonoBehaviour
 
     IEnumerator IrisOutCoroutine()
     {
+        Debug.Log("did coroutine");
         float elapsedTime = 0f;
 
         Vector3 endScale = new Vector3(-10, -10, -10);
