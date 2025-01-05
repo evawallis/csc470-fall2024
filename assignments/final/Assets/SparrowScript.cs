@@ -16,7 +16,7 @@ public class SparrowScript : MonoBehaviour
 
     public CharacterController cc;
 
-    public GameObject camera; 
+    // public GameObject camera; 
 
     public Transform cameraTransform;
 
@@ -33,7 +33,7 @@ public class SparrowScript : MonoBehaviour
 
     float gravity = -9.8f;
 
-    bool isPlayerGrounded = true;
+    // bool isPlayerGrounded = true;
 
     Vector3 lastMovementDirection = Vector3.forward;
 
@@ -43,6 +43,8 @@ public class SparrowScript : MonoBehaviour
     public GameObject instructionsBox;
 
     public TMP_Text numSeedsText;
+
+    public Animator wormAnim;
 
 
     // Start is called before the first frame update
@@ -125,7 +127,7 @@ public class SparrowScript : MonoBehaviour
 
         cameraTransform.LookAt(transform.position);
         //player movement
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 10f);
+        cameraTransform.position = new Vector3(transform.position.x, transform.position.y + 5f, transform.position.z - 10f);
 
         amountToMove += transform.forward * dashVelocity;
         amountToMove.y += yVelocity; //adding velocity to part of position to make it move that far and that fast
@@ -148,6 +150,22 @@ public class SparrowScript : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("worm"))
+        {
+            wormAnim.Play("Fear");
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("worm"))
+        {
+            wormAnim.Play("Idle_A");
+        }
+    }
+
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("seed"))
@@ -164,6 +182,7 @@ public class SparrowScript : MonoBehaviour
             }
        
         }
+        
     }
 
     public void ShowInstructions()

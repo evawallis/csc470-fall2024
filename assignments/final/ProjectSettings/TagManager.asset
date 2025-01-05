@@ -11,6 +11,8 @@ TagManager:
   - rock
   - seed
   - secondCanvas
+  - squid
+  - worm
   layers:
   - Default
   - TransparentFX
