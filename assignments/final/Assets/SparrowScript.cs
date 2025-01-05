@@ -7,8 +7,15 @@ using TMPro;
 public class SparrowScript : MonoBehaviour
 {
 
-    // public GameObject sparrow;
 
+
+    public Animator squidAnim; 
+
+    public Animator squidAnimInBox;
+
+    public GameObject squidTextBox;
+
+    public TMP_Text squidText;
 
     public Animator anim; 
 
@@ -45,6 +52,9 @@ public class SparrowScript : MonoBehaviour
     public TMP_Text numSeedsText;
 
     public Animator wormAnim;
+
+    public GameObject mapView;
+    public GameObject mapButtonObj;
 
 
     // Start is called before the first frame update
@@ -155,6 +165,26 @@ public class SparrowScript : MonoBehaviour
         if (other.CompareTag("worm"))
         {
             wormAnim.Play("Fear");
+            wormAnim.Play("Eyes_Trauma");
+        }
+        if (other.CompareTag("squid"))
+        {
+            if (numSeeds < 3)
+            {
+                squidText.text = "I'll help you find the worm but it'll cost you. Bring me 25 seeds.";
+                squidAnimInBox.Play("Eyes_Blink");
+                squidTextBox.SetActive(true);
+            }
+            else
+            {
+                squidAnimInBox.Play("Eyes_Happy");
+                squidText.text = "Thanks! Here's a token of my appreciation. Good luck and goodnight.";
+                squidTextBox.SetActive(true);
+                numSeeds-=3;
+                numSeedsText.text = numSeeds.ToString();
+                mapButtonObj.SetActive(true);
+            }
+            
         }
     }
 
@@ -163,6 +193,7 @@ public class SparrowScript : MonoBehaviour
         if (other.CompareTag("worm"))
         {
             wormAnim.Play("Idle_A");
+            wormAnim.Play("Eyes_Blink");
         }
     }
 
@@ -182,6 +213,15 @@ public class SparrowScript : MonoBehaviour
             }
        
         }
+        if (other.CompareTag("worm"))
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
+                wormAnim.SetBool("isDead", true);
+                wormAnim.Play("Eyes_Dead");
+
+            }
+        }
         
     }
 
@@ -196,6 +236,22 @@ public class SparrowScript : MonoBehaviour
     {
         instructionsBox.SetActive(false);
         questionButton.SetActive(true);
+    }
+
+    public void CloseSquidDialogue()
+    {
+        squidTextBox.SetActive(false);
+        squidAnim.Play("Sleep");
+    }
+
+    public void OpenMapView()
+    {
+        mapView.SetActive(true);
+    }
+
+    public void CloseMapView()
+    {
+        mapView.SetActive(false);
     }
 
 }
