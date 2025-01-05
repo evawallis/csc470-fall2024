@@ -215,9 +215,11 @@ public class SparrowScript : MonoBehaviour
         }
         if (other.CompareTag("worm"))
         {
+            Debug.Log("worm collide");
             if (Input.GetKey(KeyCode.E))
             {
-                wormAnim.SetBool("isDead", true);
+                Debug.Log("worm eaten");
+                wormAnim.SetTrigger("Die");
                 wormAnim.Play("Eyes_Dead");
 
             }
