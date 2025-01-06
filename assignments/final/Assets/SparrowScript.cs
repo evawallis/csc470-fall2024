@@ -66,6 +66,7 @@ public class SparrowScript : MonoBehaviour
         {
             canvas.SetActive(true);
             questionButton.SetActive(true);
+            camera.SetActive(true);
         }
         else
         {
@@ -76,7 +77,7 @@ public class SparrowScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        camera.SetActive(true);
+        
 
         // camera.transform.LookAt(transform.position);
 

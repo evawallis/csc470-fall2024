@@ -25,7 +25,9 @@ public class GameManager : MonoBehaviour
 
     public Image irisMask;
 
-    public GameObject imageCover;
+    public GameObject cam;
+
+    // public GameObject imageCover;
     float fadeDuration = 1.5f;
     Vector3 initialScale;
 
@@ -173,8 +175,9 @@ public class GameManager : MonoBehaviour
         }
 
         irisMask.rectTransform.localScale = endScale; // Ensure it's fully faded
-        imageCover.SetActive(true);
+        // imageCover.SetActive(true);
         Debug.Log("Iris out completed!");
+
         Destroy(irisMask);
         SceneManager.LoadScene("GameplayScene", LoadSceneMode.Single);
  

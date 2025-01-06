@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     public Image irisMask;
     public GameObject canvas;
 
-    public Image blackCover;
+    // public Image blackCover;
 
     
 
@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
     IEnumerator IrisOutCoroutine()
     {
         // yield return new WaitForSeconds(1);
-        Destroy(blackCover);
+        // Destroy(blackCover);
         Debug.Log("did coroutine");
         float elapsedTime = 0f;
 
