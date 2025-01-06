@@ -175,6 +175,7 @@ public class GameManager : MonoBehaviour
         irisMask.rectTransform.localScale = endScale; // Ensure it's fully faded
         imageCover.SetActive(true);
         Debug.Log("Iris out completed!");
+        Destroy(irisMask);
         SceneManager.LoadScene("GameplayScene", LoadSceneMode.Single);
  
 

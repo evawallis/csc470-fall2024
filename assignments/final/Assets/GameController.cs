@@ -12,6 +12,8 @@ public class GameController : MonoBehaviour
     public Image irisMask;
     public GameObject canvas;
 
+    public Image blackCover;
+
     
 
 
@@ -25,9 +27,9 @@ public class GameController : MonoBehaviour
         Debug.Log(SceneManager.GetActiveScene().name);
         if (SceneManager.GetActiveScene().name == "GameplayScene")
         {
-            canvas.SetActive(true);
+            // canvas.SetActive(true);
             StartCoroutine(IrisOutCoroutine());
-            Destroy(irisMask);
+            // Destroy(irisMask);
         }
         
     }
@@ -56,8 +58,12 @@ public class GameController : MonoBehaviour
         
     }
 
+    
+
     IEnumerator IrisOutCoroutine()
     {
+        // yield return new WaitForSeconds(1);
+        Destroy(blackCover);
         Debug.Log("did coroutine");
         float elapsedTime = 0f;
 
@@ -76,5 +82,6 @@ public class GameController : MonoBehaviour
         }
 
         irisMask.rectTransform.localScale = endScale; // Ensure it's fully faded
+        Debug.Log("complete coroutine");
     }
 }
