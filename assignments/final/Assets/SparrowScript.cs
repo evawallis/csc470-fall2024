@@ -23,7 +23,7 @@ public class SparrowScript : MonoBehaviour
 
     public CharacterController cc;
 
-    // public GameObject camera; 
+    public GameObject camera; 
 
     public Transform cameraTransform;
 
@@ -76,6 +76,7 @@ public class SparrowScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        camera.SetActive(true);
 
         // camera.transform.LookAt(transform.position);
 
@@ -177,10 +178,10 @@ public class SparrowScript : MonoBehaviour
             }
             else
             {
-                squidAnimInBox.Play("Eyes_Happy");
+                squidAnimInBox.SetTrigger("Eyes_Happy");
                 squidText.text = "Thanks! Here's a token of my appreciation. Good luck and goodnight.";
                 squidTextBox.SetActive(true);
-                numSeeds-=3;
+                numSeeds-=20;
                 numSeedsText.text = numSeeds.ToString();
                 mapButtonObj.SetActive(true);
             }

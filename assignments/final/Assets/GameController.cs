@@ -83,5 +83,6 @@ public class GameController : MonoBehaviour
 
         irisMask.rectTransform.localScale = endScale; // Ensure it's fully faded
         Debug.Log("complete coroutine");
+        Destroy(irisMask);
     }
 }
