@@ -223,6 +223,9 @@ public class SparrowScript : MonoBehaviour
                 Debug.Log("worm eaten");
                 wormAnim.SetTrigger("Die");
                 wormAnim.Play("Eyes_Dead");
+                Debug.Log("ending scene");
+                SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
+ 
 
             }
         }

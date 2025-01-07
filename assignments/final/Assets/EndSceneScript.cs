@@ -31,6 +31,11 @@ public class EndSceneScript : MonoBehaviour
         
     }
 
+    void Awake()
+    {
+        Debug.Log("started end scene");
+    }
+
     public void EndScene()
     {
         SceneManager.LoadScene("GameplayScene", LoadSceneMode.Single);
