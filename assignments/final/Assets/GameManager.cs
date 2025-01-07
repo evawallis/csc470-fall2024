@@ -39,16 +39,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    void Awake()
-    {
-        // SceneManager.UnloadSceneAsync("GameplayScene");
-        GameObject canvasWrong = GameObject.FindGameObjectWithTag("secondCanvas");
-        if(canvasWrong != null)
-        {
-            canvasWrong.SetActive(false);
-        }
-
-    }
+    
 
     // Start is called before the first frame update
     void Start()
@@ -178,7 +169,7 @@ public class GameManager : MonoBehaviour
         imageCover.SetActive(true);
         Debug.Log("Iris out completed!");
 
-        Destroy(irisMask);
+        // Destroy(irisMask);
         SceneManager.LoadScene("GameplayScene", LoadSceneMode.Single);
  
 
