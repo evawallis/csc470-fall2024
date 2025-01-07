@@ -221,15 +221,26 @@ public class SparrowScript : MonoBehaviour
             if (Input.GetKey(KeyCode.E))
             {
                 Debug.Log("worm eaten");
-                wormAnim.SetTrigger("Die");
-                wormAnim.Play("Eyes_Dead");
-                Debug.Log("ending scene");
-                SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
+                StartCoroutine(WormDeath());
+                // wormAnim.SetTrigger("Die");
+                // wormAnim.Play("Eyes_Dead");
+                // Debug.Log("ending scene");
+                // SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
  
 
             }
         }
         
+    }
+
+    IEnumerator WormDeath()
+    {
+        wormAnim.SetTrigger("Die");
+        wormAnim.Play("Eyes_Dead");
+        anim.Play("Eyes_Happy");
+        yield return new WaitForSeconds(2);
+        Debug.Log("ending scene");
+        SceneManager.LoadScene("EndScene", LoadSceneMode.Single);
     }
 
     public void ShowInstructions()
