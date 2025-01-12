@@ -11,7 +11,11 @@ public class GameManager : MonoBehaviour
     public Action SpaceBarPressed;
     public Action<UnitScript> UnitClicked;
 
+    public GameObject winText;
+
     public static GameManager instance;
+
+    public GameObject snowmanPrefab;
 
     LayerMask layerMask;
     public Vector3 destination;
@@ -20,6 +24,10 @@ public class GameManager : MonoBehaviour
 
     public UnitScript selectedUnit;
 
+    Transform unitSelectedPoint;
+    Transform snowBallSelectedPoint;
+
+    Vector3 savedPosition;
     
 
     public GameObject popUpWindow;
@@ -33,6 +41,9 @@ public class GameManager : MonoBehaviour
     public Image portraitImage;
 
     public Camera mainCamera;
+
+    int numSnowballs = 0;
+    public TMP_Text snowBallNumText;
 
 
     // Start is called before the first frame update
@@ -57,59 +68,78 @@ public class GameManager : MonoBehaviour
         layerMask = LayerMask.GetMask("ground", "unit");
     }
 
-    // Update is called once per frame
     void Update()
+{
+    snowBallNumText.text = numSnowballs.ToString();
+    // Handle space bar press
+    if (Input.GetKeyDown(KeyCode.Space))
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        SpaceBarPressed?.Invoke();
+    }
+
+    // Handle mouse input
+    if (Input.GetMouseButtonDown(0))
+    {
+        Ray mousePositionRay = mainCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(mousePositionRay, out hitInfo, Mathf.Infinity, layerMask))
         {
-            SpaceBarPressed?.Invoke();
-        }
-
-
-
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray mousePositionRay = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hitInfo;
-            if (Physics.Raycast(mousePositionRay,out hitInfo, Mathf.Infinity, layerMask))
+            if (hitInfo.collider.CompareTag("ground"))
             {
-                if (hitInfo.collider.CompareTag("ground"))
+                Debug.Log("Ground hit!");
+                if (selectedUnit != null)
                 {
-                    Debug.Log("ground hit!");
-                    if (selectedUnit != null)
-                    {
-                        // selectedUnit.gameObject.transform.position =hitInfo.point;
-                        // selectedUnit.destination = hitInfo.point;
-                        selectedUnit.nma.SetDestination(hitInfo.point);
-                    }
-                } 
-                else if (hitInfo.collider.CompareTag("unit"))
-                {
-                    // SelectUnit(hitInfo.collider.gameObject.GetComponent<UnitScript>());
-                    UnitClicked?.Invoke(hitInfo.collider.gameObject.GetComponent<UnitScript>());
-                    selectedUnit = hitInfo.collider.gameObject.GetComponent<UnitScript>();
+                    selectedUnit.nma.SetDestination(hitInfo.point); // Set destination for the unit
                 }
-                
+            }
+            else if (hitInfo.collider.CompareTag("unit"))
+            {
+                // select a new unit
+                UnitClicked?.Invoke(hitInfo.collider.gameObject.GetComponent<UnitScript>());
+                selectedUnit = hitInfo.collider.gameObject.GetComponent<UnitScript>();
+                unitSelectedPoint = hitInfo.collider.gameObject.transform;
+            }
+            else if (hitInfo.collider.CompareTag("snowball"))
+            {
+                snowBallSelectedPoint = hitInfo.collider.gameObject.transform;
+                if (selectedUnit != null)
+                {
+                    // Set destination to snowball
+                    selectedUnit.nma.SetDestination(hitInfo.point);
+                    Debug.Log("Snowball selected!");
+                }
             }
         }
     }
 
+    if (selectedUnit != null && snowBallSelectedPoint != null)
+    {
+        if (!selectedUnit.nma.pathPending && selectedUnit.nma.remainingDistance <= selectedUnit.nma.stoppingDistance)
+        {
+            if (Vector3.Distance(selectedUnit.transform.position, snowBallSelectedPoint.position) < 5f)
+            {
+                Debug.Log("Snowball collected!");
+                savedPosition = snowBallSelectedPoint.position;
+                Destroy(snowBallSelectedPoint.gameObject);
+                snowBallSelectedPoint = null; // Reset the snowball selection
+                numSnowballs++;
+
+                if (numSnowballs >= 10)
+                {
+                    Instantiate(snowmanPrefab, savedPosition, Quaternion.identity);
+                    Debug.Log("Snowman instantiated!");
+                    winText.SetActive(true);
+                }
+            }
+        }
+    }
+}
+
     public void SelectUnit(UnitScript unit)
     {
         UnitClicked?.Invoke(unit);
-        //deselect all other units
-        // foreach(UnitScript u in units)
-        // {
-        //     u.selected = false;
-        //     u.bodyRenderer.material.color = u.normalColor;
-
-        // }
-        //select new unit
-        // unit.selected = true;
-        // unit.bodyRenderer.material.color = unit.selectedColor;
-        // Debug.Log(unit.name);
-        // selectedUnit = unit;
+    
     }
 
     public void OpenCharacterSheet()
@@ -124,4 +154,6 @@ public class GameManager : MonoBehaviour
     {
         popUpWindow.SetActive(false);
     }
+
+
 }

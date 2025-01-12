@@ -8,6 +8,7 @@ TagManager:
   - unit
   - snow
   - brick
+  - snowball
   layers:
   - Default
   - TransparentFX

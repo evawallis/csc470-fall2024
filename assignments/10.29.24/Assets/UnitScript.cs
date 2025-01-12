@@ -16,6 +16,7 @@ public class UnitScript : MonoBehaviour
     public Color selectedColor;
     public Color normalColor;
     public Renderer bodyRenderer;
+    int numSnowballs = 0;
 
     // public Vector3 destination;
     public GameObject wallSeeingSphere;
@@ -111,5 +112,14 @@ public class UnitScript : MonoBehaviour
         // GameManager.instance.statText.text = stats;
         // GameManager.instance.OpenCharacterSheet(this);
         // GameManager.instance.SelectUnit(this);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("snowball"))
+        {
+            Destroy(other);
+            numSnowballs++;
+        }
     }
 }
